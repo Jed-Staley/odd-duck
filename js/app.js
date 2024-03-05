@@ -5,33 +5,33 @@ let collectNVotes = 25;
 
 let products = [];
 
-function Product(name, src) {
+function Product(name) {
   this.name = name;
-  this.src = src;
+  this.src = 'images/' + name + '.jpg';
   this.votes = 0;
   this.views = 0;
   products.push(this);
 }
 
-new Product('bag', 'images/bag.jpg');
-new Product('banana', 'images/banana.jpg');
-new Product('bathroom', 'images/bathroom.jpg');
-new Product('boots', 'images/boots.jpg');
-new Product('breakfast', 'images/breakfast.jpg');
-new Product('bubblegum', 'images/bubblegum.jpg');
-new Product('chair', 'images/chair.jpg');
-new Product('cthulhu', 'images/cthulhu.jpg');
-new Product('dog-duck', 'images/dog-duck.jpg');
-new Product('dragon', 'images/dragon.jpg');
-new Product('pen', 'images/pen.jpg');
-new Product('pet-sweep', 'images/pet-sweep.jpg');
-new Product('scissors', 'images/scissors.jpg');
-new Product('shark', 'images/shark.jpg');
-new Product('sweep', 'images/sweep.jpg');
-new Product('tauntaun', 'images/tauntaun.jpg');
-new Product('unicorn', 'images/unicorn.jpg');
-new Product('water-can', 'images/water-can.jpg');
-new Product('wine-glass', 'images/wine-glass.jpg');
+new Product('bag');
+new Product('banana');
+new Product('bathroom');
+new Product('boots');
+new Product('breakfast');
+new Product('bubblegum');
+new Product('chair');
+new Product('cthulhu');
+new Product('dog-duck');
+new Product('dragon');
+new Product('pen');
+new Product('pet-sweep');
+new Product('scissors');
+new Product('shark');
+new Product('sweep');
+new Product('tauntaun');
+new Product('unicorn');
+new Product('water-can');
+new Product('wine-glass');
 
 function loadPictureScheme() {
   const imagesSection = document.getElementById('images');
@@ -41,10 +41,12 @@ function loadPictureScheme() {
 
     const newImage = document.createElement('img');
     newImage.id = 'newImage-' + i;
+    newImage.alt = 'Image of product ' + (i + 1);
     newDiv.appendChild(newImage);
 
     const newButton = document.createElement('button');
     newButton.id = 'newButton-' + i;
+    newButton.innerHTML = 'Vote for product ' + (i + 1);
     newDiv.appendChild(newButton);
 
     imagesSection.appendChild(newDiv);
@@ -52,16 +54,18 @@ function loadPictureScheme() {
 }
 
 let voteCounter = 0;
+let lastProducts = [];
 function loadNewProducts() {
-  let availableProducts = [];
-  for (let i = 0; i < products.length; i++) {
-    availableProducts.push(i);
+  let availableProducts = [...products];
+  while (lastProducts.length > 0) {
+    availableProducts.splice(availableProducts.indexOf(lastProducts.pop()), 1);
   }
   for (let i = 0; i < showNImages; i++) {
-    let choice = Math.floor(availableProducts.length * Math.random());
-    let chosenProduct = products[availableProducts[choice]];
-    availableProducts.splice(choice, 1);
-    chosenProduct.views++;
+    let indexOfChoice = Math.floor(availableProducts.length * Math.random());
+    let chosenProduct = availableProducts[indexOfChoice];
+    availableProducts.splice(indexOfChoice, 1);
+    lastProducts.push(chosenProduct);
+    chosenProduct['views']++;
 
     const image = document.getElementById('newImage-' + i);
     image.src = chosenProduct.src;
@@ -93,13 +97,74 @@ function endVoting() {
   const resultsButton = document.createElement('button');
   resultsButton.textContent = 'View Results';
   resultsButton.onclick = function() {
-    resultsButton.textContent = '';
     resultsButton.remove();
-    for (let i = 0; i < products.length; i++) {
-      results.innerHTML += `${products[i].name} had ${products[i].votes} votes, and was seen ${products[i].views} times.<br>`;
-    }
+    const canvas1 = document.createElement('canvas');
+    canvas1.id = 'chart1';
+    results.appendChild(canvas1);
+    const canvas2 = document.createElement('canvas');
+    canvas2.id = 'chart2';
+    results.appendChild(canvas2);
+    makeCharts();
   };
   results.appendChild(resultsButton);
+}
+
+function makeCharts() {
+  let namesArray = [];
+  let viewsArray = [];
+  let votesArray = [];
+  let chartColors = [];
+  for (let i = 0; i < products.length; i++) {
+    namesArray.push(products[i].name);
+    viewsArray.push(products[i].views);
+    votesArray.push(products[i].votes);
+    let color1 = Math.floor(256 * Math.random());
+    let color2 = Math.floor(256 * Math.random());
+    let color3 = Math.floor(256 * Math.random());
+    chartColors.push(`rgba(${color1}, ${color2}, ${color3}, 1)`);
+  }
+
+  function makeBarChart(canvasid, data, labels, chartLabel) {
+    const ctx = document.getElementById(canvasid);
+    Chart.defaults.color = 'white';
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '# of ' + chartLabel,
+          data: data,
+          backgroundColor: chartColors,
+          borderWidth: 1,
+          text: 'white'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            grid: {
+              color: 'white'
+            },
+            ticks: {
+              color: 'white'
+            },
+            beginAtZero: true
+          },
+          x: {
+            grid: {
+              color: 'white'
+            },
+            ticks: {
+              color: 'white'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  makeBarChart('chart1', viewsArray, namesArray, 'Views');
+  makeBarChart('chart2', votesArray, namesArray, 'Votes');
 }
 
 loadPictureScheme();
