@@ -83,6 +83,51 @@ function loadNewProducts() {
   }
 }
 
+function makeCharts() {
+  let namesArray = [];
+  let viewsArray = [];
+  let votesArray = [];
+  let chartBackgroundColors = [];
+  let chartBorderColors = [];
+  for (let i = 0; i < products.length; i++) {
+    namesArray.push(products[i].name);
+    viewsArray.push(products[i].views);
+    votesArray.push(products[i].votes);
+    let color1 = Math.floor(256 * Math.random());
+    let color2 = Math.floor(256 * Math.random());
+    let color3 = Math.floor(256 * Math.random());
+    chartBackgroundColors.push(`rgba(${color1}, ${color2}, ${color3}, 0.2)`);
+    chartBorderColors.push(`rgba(${color1}, ${color2}, ${color3}, 1)`);
+  }
+
+  function makeBarChart(canvasid, data, labels, chartLabel) {
+    const ctx = document.getElementById(canvasid);
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '# of ' + chartLabel,
+          data: data,
+          backgroundColor: chartBackgroundColors,
+          borderColor: chartBorderColors,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+  makeBarChart('chart1', viewsArray, namesArray, 'Views');
+  makeBarChart('chart2', votesArray, namesArray, 'Votes');
+}
+
 function endVoting() {
   const imageSection = document.getElementById('images');
   while (imageSection.firstChild) {
@@ -97,11 +142,14 @@ function endVoting() {
   const resultsButton = document.createElement('button');
   resultsButton.textContent = 'View Results';
   resultsButton.onclick = function() {
-    resultsButton.textContent = '';
     resultsButton.remove();
-    for (let i = 0; i < products.length; i++) {
-      results.innerHTML += `${products[i].name} had ${products[i].votes} votes, and was seen ${products[i].views} times.<br>`;
-    }
+    const canvas1 = document.createElement('canvas');
+    canvas1.id = 'chart1';
+    results.appendChild(canvas1);
+    const canvas2 = document.createElement('canvas');
+    canvas2.id = 'chart2';
+    results.appendChild(canvas2);
+    makeCharts();
   };
   results.appendChild(resultsButton);
 }

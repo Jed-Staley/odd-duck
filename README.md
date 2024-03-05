@@ -20,8 +20,8 @@ This is a website for voting on a selection of products
 
 #### Monday
 
-* ![Screenshot 1](<images/Screenshot Monday.png>)
+![Lighthouse Monday](<images/screenshots/Lighthouse Monday.png>)
 
 ### Reflections and Comments
 
-* Cleaned up the JS today and added a new JS file for the darkmode. Everything went well.
+* Created basic website, needs style refining.
