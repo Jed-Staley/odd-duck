@@ -5,33 +5,33 @@ let collectNVotes = 25;
 
 let products = [];
 
-function Product(name, src) {
+function Product(name) {
   this.name = name;
-  this.src = src;
+  this.src = 'images/' + name + '.jpg';
   this.votes = 0;
   this.views = 0;
   products.push(this);
 }
 
-new Product('bag', 'images/bag.jpg');
-new Product('banana', 'images/banana.jpg');
-new Product('bathroom', 'images/bathroom.jpg');
-new Product('boots', 'images/boots.jpg');
-new Product('breakfast', 'images/breakfast.jpg');
-new Product('bubblegum', 'images/bubblegum.jpg');
-new Product('chair', 'images/chair.jpg');
-new Product('cthulhu', 'images/cthulhu.jpg');
-new Product('dog-duck', 'images/dog-duck.jpg');
-new Product('dragon', 'images/dragon.jpg');
-new Product('pen', 'images/pen.jpg');
-new Product('pet-sweep', 'images/pet-sweep.jpg');
-new Product('scissors', 'images/scissors.jpg');
-new Product('shark', 'images/shark.jpg');
-new Product('sweep', 'images/sweep.jpg');
-new Product('tauntaun', 'images/tauntaun.jpg');
-new Product('unicorn', 'images/unicorn.jpg');
-new Product('water-can', 'images/water-can.jpg');
-new Product('wine-glass', 'images/wine-glass.jpg');
+new Product('bag');
+new Product('banana');
+new Product('bathroom');
+new Product('boots');
+new Product('breakfast');
+new Product('bubblegum');
+new Product('chair');
+new Product('cthulhu');
+new Product('dog-duck');
+new Product('dragon');
+new Product('pen');
+new Product('pet-sweep');
+new Product('scissors');
+new Product('shark');
+new Product('sweep');
+new Product('tauntaun');
+new Product('unicorn');
+new Product('water-can');
+new Product('wine-glass');
 
 function loadPictureScheme() {
   const imagesSection = document.getElementById('images');
