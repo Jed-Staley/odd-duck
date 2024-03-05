@@ -54,16 +54,18 @@ function loadPictureScheme() {
 }
 
 let voteCounter = 0;
+let lastProducts = [];
 function loadNewProducts() {
-  let availableProducts = [];
-  for (let i = 0; i < products.length; i++) {
-    availableProducts.push(i);
+  let availableProducts = [...products];
+  while (lastProducts.length > 0) {
+    availableProducts.splice(availableProducts.indexOf(lastProducts.pop()), 1);
   }
   for (let i = 0; i < showNImages; i++) {
-    let choice = Math.floor(availableProducts.length * Math.random());
-    let chosenProduct = products[availableProducts[choice]];
-    availableProducts.splice(choice, 1);
-    chosenProduct.views++;
+    let indexOfChoice = Math.floor(availableProducts.length * Math.random());
+    let chosenProduct = availableProducts[indexOfChoice];
+    availableProducts.splice(indexOfChoice, 1);
+    lastProducts.push(chosenProduct);
+    chosenProduct['views']++;
 
     const image = document.getElementById('newImage-' + i);
     image.src = chosenProduct.src;
