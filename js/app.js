@@ -1,7 +1,7 @@
 'use strict';
 
 let showNImages = 3;
-let collectNVotes = 25;
+let collectNVotes = 1;
 
 let products = [];
 
@@ -83,51 +83,6 @@ function loadNewProducts() {
   }
 }
 
-function makeCharts() {
-  let namesArray = [];
-  let viewsArray = [];
-  let votesArray = [];
-  let chartBackgroundColors = [];
-  let chartBorderColors = [];
-  for (let i = 0; i < products.length; i++) {
-    namesArray.push(products[i].name);
-    viewsArray.push(products[i].views);
-    votesArray.push(products[i].votes);
-    let color1 = Math.floor(256 * Math.random());
-    let color2 = Math.floor(256 * Math.random());
-    let color3 = Math.floor(256 * Math.random());
-    chartBackgroundColors.push(`rgba(${color1}, ${color2}, ${color3}, 0.2)`);
-    chartBorderColors.push(`rgba(${color1}, ${color2}, ${color3}, 1)`);
-  }
-
-  function makeBarChart(canvasid, data, labels, chartLabel) {
-    const ctx = document.getElementById(canvasid);
-    const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '# of ' + chartLabel,
-          data: data,
-          backgroundColor: chartBackgroundColors,
-          borderColor: chartBorderColors,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  }
-
-  makeBarChart('chart1', viewsArray, namesArray, 'Views');
-  makeBarChart('chart2', votesArray, namesArray, 'Votes');
-}
-
 function endVoting() {
   const imageSection = document.getElementById('images');
   while (imageSection.firstChild) {
@@ -152,6 +107,64 @@ function endVoting() {
     makeCharts();
   };
   results.appendChild(resultsButton);
+}
+
+function makeCharts() {
+  let namesArray = [];
+  let viewsArray = [];
+  let votesArray = [];
+  let chartColors = [];
+  for (let i = 0; i < products.length; i++) {
+    namesArray.push(products[i].name);
+    viewsArray.push(products[i].views);
+    votesArray.push(products[i].votes);
+    let color1 = Math.floor(256 * Math.random());
+    let color2 = Math.floor(256 * Math.random());
+    let color3 = Math.floor(256 * Math.random());
+    chartColors.push(`rgba(${color1}, ${color2}, ${color3}, 1)`);
+  }
+
+  function makeBarChart(canvasid, data, labels, chartLabel) {
+    const ctx = document.getElementById(canvasid);
+    Chart.defaults.color = 'white';
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '# of ' + chartLabel,
+          data: data,
+          backgroundColor: chartColors,
+          borderWidth: 1,
+          text: 'white'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            grid: {
+              color: 'white'
+            },
+            ticks: {
+              color: 'white'
+            },
+            beginAtZero: true
+          },
+          x: {
+            grid: {
+              color: 'white'
+            },
+            ticks: {
+              color: 'white'
+            }
+          }
+        }
+      }
+    });
+  }
+
+  makeBarChart('chart1', viewsArray, namesArray, 'Views');
+  makeBarChart('chart2', votesArray, namesArray, 'Votes');
 }
 
 loadPictureScheme();
