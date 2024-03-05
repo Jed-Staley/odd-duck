@@ -1,7 +1,7 @@
 'use strict';
 
 let showNImages = 3;
-let collectNVotes = 1;
+let collectNVotes = 25;
 
 let products = [];
 
