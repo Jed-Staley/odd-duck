@@ -41,10 +41,12 @@ function loadPictureScheme() {
 
     const newImage = document.createElement('img');
     newImage.id = 'newImage-' + i;
+    newImage.alt = 'Image of product ' + (i + 1);
     newDiv.appendChild(newImage);
 
     const newButton = document.createElement('button');
     newButton.id = 'newButton-' + i;
+    newButton.innerHTML = 'Vote for product ' + (i + 1);
     newDiv.appendChild(newButton);
 
     imagesSection.appendChild(newDiv);

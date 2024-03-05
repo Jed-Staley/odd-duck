@@ -28,7 +28,8 @@ body {
 .results {
   grid-area: results;
   border-right: 3px solid dimgray;
-  background-color: teal;
+  background-color: darkslategray;
+  color: white;
   text-align: center;
 
   button {
@@ -65,6 +66,7 @@ body {
     height: 100%;
     transform: translate(-50%, -50%);
     background-color: transparent;
+    color: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
