@@ -26,6 +26,10 @@ This is a website for voting on a selection of products
 
 ![Lighthouse Tuesday](<images/screenshots/Lighthouse Tuesday.png>)
 
+#### Wednesday
+
+![Lighthouse Wednesday](<images/screenshots/Lighthouse Wednesday.png>)
+
 ### Reflections and Comments
 
-* Created basic website, needs style refining.
+* Finished website with all features implemented.
