@@ -15,7 +15,7 @@ This is a website for voting on a selection of products
 ### Links and Resources
 
 * N/A
-
+  
 ### Lighthouse Accessibility Report Score
 
 #### Monday
