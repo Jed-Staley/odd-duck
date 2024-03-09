@@ -1,8 +1,10 @@
 'use strict';
 
+// parameters
 let showNImages = 3;
 let collectNVotes = 25;
 
+// retrieves local storage
 let products = JSON.parse(localStorage.getItem('products')) || [];
 
 function Product(name) {
@@ -39,6 +41,7 @@ if (products[0] === undefined) {
   new Product('wine-glass');
 }
 
+// loads the HTML to prepare it for the images so that you can work with any number of images shown simultaneously.
 function loadPictureScheme() {
   const imagesSection = document.getElementById('images');
   for (let i = 0; i < showNImages; i++) {
@@ -59,6 +62,7 @@ function loadPictureScheme() {
   }
 }
 
+// loads the images into their slots with their corresponding buttons and handles votes
 let voteCounter = 0;
 let lastProducts = [];
 function loadNewProducts() {
@@ -90,6 +94,7 @@ function loadNewProducts() {
   }
 }
 
+// ends the voting and loads the 'show results' button
 function endVoting() {
   const imageSection = document.getElementById('images');
   while (imageSection.firstChild) {
@@ -116,6 +121,7 @@ function endVoting() {
   results.appendChild(resultsButton);
 }
 
+// makes the charts when the 'show results' button is clicked
 function makeCharts() {
   let namesArray = [];
   let viewsArray = [];

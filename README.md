@@ -1,8 +1,8 @@
-# LAB 11
+# LAB 11-13
 
 ## Website for Voting
 
-This is a website for voting on a selection of products
+This is a website for voting on a selection of products. After 25 votes are recieved, you can click a button to view the results where two charts are displayed.
 
 ## Links:
 
@@ -29,7 +29,3 @@ This is a website for voting on a selection of products
 #### Wednesday
 
 ![Lighthouse Wednesday](<images/screenshots/Lighthouse Wednesday.png>)
-
-### Reflections and Comments
-
-* Finished website with all features implemented.
